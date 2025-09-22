@@ -14,12 +14,12 @@ export async function handler(event) {
     const gptRes = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${openaiApiKey}`,
+        Authorization: `Bearer ${sk-q7TV7-xTnWmFjZyZNJxjfKTbB6zqz51fdw1wtUhxofT3BlbkFJcfd02OvSFxIoNWKdy0l7P96OCblUmOWYbrwPmQqTgA}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         // Swap this with your custom GPT model ID if you want
-        model: "gpt-4o-mini",
+        model: "gpt-4o-mini:g-68c8bf11a0f8819199173d8013742108",
         messages: [
           {
             role: "system",
