@@ -11,7 +11,7 @@ const stopBtn = document.getElementById('stop');
 const saveBtn = document.getElementById('save-session');
 
 // Replace with your Deepgram Project API key
-const DEEPGRAM_API_KEY = "YOUR_DEEPGRAM_KEY_HERE";
+const DEEPGRAM_API_KEY = "d2acc4d15b012251a6996dd05f64a6f52f7b3734";
 
 function connectDeepgram() {
   socket = new WebSocket("wss://api.deepgram.com/v1/listen", [
