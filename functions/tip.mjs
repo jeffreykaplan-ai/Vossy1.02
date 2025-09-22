@@ -1,5 +1,22 @@
 export async function handler(event) {
   try {
+    const gptJson = await gptRes.json();
+
+// Log full response for debugging
+console.log("OpenAI raw response:", JSON.stringify(gptJson, null, 2));
+
+let tip = "No tip returned.";
+if (gptJson.choices && gptJson.choices.length > 0) {
+  tip = gptJson.choices[0].message.content.trim();
+} else if (gptJson.error) {
+  tip = `Error from OpenAI: ${gptJson.error.message}`;
+}
+
+return {
+  statusCode: 200,
+  body: JSON.stringify({ tip }),
+};
+
     const { transcript } = JSON.parse(event.body || "{}");
 
     if (!transcript) {
