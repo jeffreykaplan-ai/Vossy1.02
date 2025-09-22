@@ -10,7 +10,6 @@ const startBtn = document.getElementById('start');
 const stopBtn = document.getElementById('stop');
 const saveBtn = document.getElementById('save-session');
 
-
 // ✅ Fetch Deepgram API key securely from Netlify function
 async function getDeepgramKey() {
   const res = await fetch("/api/get-deepgram-key");
@@ -20,7 +19,6 @@ async function getDeepgramKey() {
 
 async function connectDeepgram() {
   const DEEPGRAM_API_KEY = await getDeepgramKey();
->>>>>>> 618bd28 (Secure Deepgram key with Netlify function)
 
   socket = new WebSocket("wss://api.deepgram.com/v1/listen", [
     "token",
@@ -120,6 +118,7 @@ function addBubble(text, type) {
   history.appendChild(bubble);
   history.scrollTop = history.scrollHeight;
 }
+
 function addToHistory(text, type) {
   const bubble = document.createElement("div");
   bubble.classList.add("bubble", type);
@@ -127,6 +126,7 @@ function addToHistory(text, type) {
   chatHistory.appendChild(bubble);
   chatHistory.scrollTop = chatHistory.scrollHeight;
 }
+
 saveBtn.onclick = () => {
   let content = "Vossy Coaching Session\n\n";
   document.querySelectorAll("#chat-history .bubble").forEach(bubble => {
