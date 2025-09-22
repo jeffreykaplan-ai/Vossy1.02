@@ -19,7 +19,7 @@ export async function handler(event) {
       },
       body: JSON.stringify({
         // Swap this with your custom GPT model ID if you want
-        model: "gpt-4o-mini:g-68c8bf11a0f8819199173d8013742108",
+        model: "gpt-5",
         messages: [
           {
             role: "system",
