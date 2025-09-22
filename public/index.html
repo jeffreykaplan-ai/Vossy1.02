@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vossy Coach</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Header -->
+  <h1>🎙️ Vossy Coach</h1>
+  <p>Whisper API + GPT Coaching Tips</p>
+
+  <!-- Controls -->
+  <div>
+    <button id="start">🎤 Start Listening</button>
+    <button id="stop">⏹️ Stop</button>
+  </div>
+
+  <!-- Status Badge -->
+  <p id="status">Idle...</p>
+
+  <!-- Coaching Tip -->
+  <div class="card">
+    <h2>💡 Coaching Tip</h2>
+    <p id="tip">...</p>
+  </div>
+
+  <!-- Transcript -->
+  <div class="card">
+    <h2>📝 Transcript</h2>
+    <div id="history"></div>
+  </div>
+
+  <!-- Session History -->
+  <div class="card">
+    <h2>📚 Session History</h2>
+    <div id="chat-history"></div>
+    <button id="save-session">💾 Save Session</button>
+  </div>
+
+  <script type="module" src="/assets/main.js"></script>
+</body>
+</html>
