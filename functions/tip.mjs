@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-export async function handler(event, context) {
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ tip: "Function is alive!" })
-  };
-=======
 export async function handler(event) {
   try {
     const { transcript } = JSON.parse(event.body || "{}");
