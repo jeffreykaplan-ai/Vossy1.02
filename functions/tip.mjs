@@ -14,13 +14,12 @@ export async function handler(event) {
     const gptRes = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: `Bearer $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`,
+        Authorization: `Bearer ${openaiApiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        // ✅ Swap this with your custom GPT model ID if you have one
-        // For example: "gpt-4o-mini:custom-vossy-68c8bf11a0f8..."
-      model: "gpt-4o-mini:g-68c8bf11a0f8819199173d8013742108",
+        // Swap this with your custom GPT model ID if you want
+        model: "gpt-4o-mini",
         messages: [
           {
             role: "system",
@@ -75,5 +74,4 @@ When generating tips, keep them 1–2 short sentences max. Tone should feel like
       body: JSON.stringify({ error: "Error generating coaching tip." }),
     };
   }
->>>>>>> ba76c1a816ae36de65b759bfc0209176d59b1751
 }
