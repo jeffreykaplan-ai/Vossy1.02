@@ -14,7 +14,7 @@ export async function handler(event) {
     const gptRes = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${sk-q7TV7-xTnWmFjZyZNJxjfKTbB6zqz51fdw1wtUhxofT3BlbkFJcfd02OvSFxIoNWKdy0l7P96OCblUmOWYbrwPmQqTgA}`,
+        Authorization: `Bearer $const openaiApiKey = process.env.OPENAI_API_KEY`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
