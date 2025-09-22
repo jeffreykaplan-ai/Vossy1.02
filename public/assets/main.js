@@ -10,10 +10,18 @@ const startBtn = document.getElementById('start');
 const stopBtn = document.getElementById('stop');
 const saveBtn = document.getElementById('save-session');
 
-// Replace with your Deepgram Project API key
-const DEEPGRAM_API_KEY = "const DEEPGRAM_API_KEY = process.env.DEEPGRAM_API_KEY";
 
-function connectDeepgram() {
+// ✅ Fetch Deepgram API key securely from Netlify function
+async function getDeepgramKey() {
+  const res = await fetch("/api/get-deepgram-key");
+  const data = await res.json();
+  return data.key;
+}
+
+async function connectDeepgram() {
+  const DEEPGRAM_API_KEY = await getDeepgramKey();
+>>>>>>> 618bd28 (Secure Deepgram key with Netlify function)
+
   socket = new WebSocket("wss://api.deepgram.com/v1/listen", [
     "token",
     DEEPGRAM_API_KEY
