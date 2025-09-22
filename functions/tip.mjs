@@ -10,16 +10,18 @@ export async function handler(event) {
     }
 
     const openaiApiKey = process.env.OPENAI_API_KEY;
+    if (!openaiApiKey) {
+      throw new Error("Missing OPENAI_API_KEY in environment variables");
+    }
 
     const gptRes = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: `Bearer $const openaiApiKey = process.env.OPENAI_API_KEY`,
+        Authorization: `Bearer ${openaiApiKey}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        // Swap this with your custom GPT model ID if you want
-        model: "gpt-5",
+        model: "gpt-4.1-mini",
         messages: [
           {
             role: "system",
@@ -61,7 +63,10 @@ When generating tips, keep them 1–2 short sentences max. Tone should feel like
     });
 
     const gptJson = await gptRes.json();
-    const tip = gptJson.choices?.[0]?.message?.content?.trim() || "No tip returned.";
+
+    const tip =
+      gptJson.choices?.[0]?.message?.content?.trim() ||
+      `No tip returned. Debug: ${JSON.stringify(gptJson)}`;
 
     return {
       statusCode: 200,
