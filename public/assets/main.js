@@ -9,6 +9,7 @@ const status = document.getElementById('status');
 const startBtn = document.getElementById('start');
 const stopBtn = document.getElementById('stop');
 const saveBtn = document.getElementById('save-session');
+const pulse = document.getElementById('pulse'); // 👈 pulsing dot element
 
 // ✅ Fetch Deepgram API key securely from Netlify function
 async function getDeepgramKey() {
@@ -20,7 +21,7 @@ async function getDeepgramKey() {
 async function connectDeepgram() {
   const DEEPGRAM_API_KEY = await getDeepgramKey();
 
-  socket = new WebSocket("wss://api.deepgram.com/v1/listen", [
+  socket = new WebSocket("wss://api.deepgram.com/v1/listen?model=nova&punctuate=true&language=en", [
     "token",
     DEEPGRAM_API_KEY
   ]);
@@ -83,6 +84,23 @@ async function startStreaming() {
   const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
   const mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
 
+  // 🎤 AudioContext for pulsing dot
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const source = audioCtx.createMediaStreamSource(stream);
+  const analyser = audioCtx.createAnalyser();
+  analyser.fftSize = 256;
+  const dataArray = new Uint8Array(analyser.frequencyBinCount);
+  source.connect(analyser);
+
+  function drawPulse() {
+    requestAnimationFrame(drawPulse);
+    analyser.getByteFrequencyData(dataArray);
+    let volume = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+    let scale = 1 + (volume / 256); // pulse size
+    pulse.style.transform = `scale(${scale})`;
+  }
+  drawPulse();
+
   mediaRecorder.ondataavailable = (event) => {
     if (socket && socket.readyState === WebSocket.OPEN) {
       socket.send(event.data);
@@ -99,6 +117,7 @@ async function startStreaming() {
       isStreaming = false;
       status.innerText = "Stopped.";
       status.style.background = "rgba(255,255,255,0.1)";
+      audioCtx.close();
     }
   };
 }
@@ -118,7 +137,6 @@ function addBubble(text, type) {
   history.appendChild(bubble);
   history.scrollTop = history.scrollHeight;
 }
-
 function addToHistory(text, type) {
   const bubble = document.createElement("div");
   bubble.classList.add("bubble", type);
@@ -126,7 +144,6 @@ function addToHistory(text, type) {
   chatHistory.appendChild(bubble);
   chatHistory.scrollTop = chatHistory.scrollHeight;
 }
-
 saveBtn.onclick = () => {
   let content = "Vossy Coaching Session\n\n";
   document.querySelectorAll("#chat-history .bubble").forEach(bubble => {
