@@ -17,6 +17,15 @@ button {
   font-size: 1em; font-weight: 600; cursor: pointer; transition: all 0.25s ease-in-out;
   color: #fff;
 }
+#pulse {
+  width: 20px;
+  height: 20px;
+  margin: 10px auto;
+  border-radius: 50%;
+  background-color: #00ff88;
+  transition: transform 0.05s linear;
+}
+
 #start {
   background: rgba(0, 255, 136, 0.25); backdrop-filter: blur(10px);
   border: 1px solid rgba(0, 255, 136, 0.5);
