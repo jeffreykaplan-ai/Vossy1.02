@@ -1,6 +1,3 @@
-import fetch from "node-fetch";
-import FormData from "form-data";
-
 export async function handler(event) {
   try {
     const { audioBase64 } = JSON.parse(event.body || "{}");
@@ -14,15 +11,12 @@ export async function handler(event) {
 
     const openaiApiKey = process.env.OPENAI_API_KEY;
     if (!openaiApiKey) {
-      throw new Error("Missing OPENAI_API_KEY in environment variables");
+      throw new Error("Missing OPENAI_API_KEY");
     }
 
-    // Build form data for Whisper API
+    // Build form data for Whisper API (using native FormData)
     const formData = new FormData();
-    formData.append("file", Buffer.from(audioBase64, "base64"), {
-      filename: "audio.webm",
-      contentType: "audio/webm",
-    });
+    formData.append("file", Buffer.from(audioBase64, "base64"), "audio.webm");
     formData.append("model", "whisper-1");
 
     const res = await fetch("https://api.openai.com/v1/audio/transcriptions", {
@@ -33,7 +27,7 @@ export async function handler(event) {
 
     const json = await res.json();
 
-    // Log for debugging
+    // Debug log
     console.log("Whisper response:", json);
 
     return {
